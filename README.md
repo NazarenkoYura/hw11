@@ -57,8 +57,10 @@ make clean                   # helm uninstall + kind delete cluster
 
 - Лимиты контейнеров сервиса: requests cpu 300m / mem 256Mi; limits cpu 1 / mem 512Mi.
 - Prometheus retention 2h; Grafana 256Mi limit; метрики в Histogram (ограниченный набор меток).
-- Фактический размер: `make size` (образы hw11-service ~0.4 ГБ sim / ~2.5 ГБ real,
-  kind node ~1.5 ГБ, prometheus+grafana ~0.6 ГБ). Итого < 5 ГБ.
+- Фактический размер (замер в evidence/stand_size.txt): образы hw11-service
+  1.78 ГБ sim + 1.78 ГБ real (torch CPU); внутри kind-ноды containerd ~25 ГБ
+  (накопленные слои пересборок образов за сессию) + кэш HF ~2.9 ГБ.
+  `kind delete cluster` удаляет ноду целиком со всем содержимым.
 
 ## Параметры backend (все в chart/values.yaml → ConfigMap)
 
