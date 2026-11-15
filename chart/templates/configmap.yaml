@@ -1,0 +1,20 @@
+# ConfigMap: конфигурация backend/опыта (параметры прогрева, очереди, кеша)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hw11-config
+  labels: &lbl
+    app: hw11
+data:
+  WARMUP_SECONDS: {{ .Values.backend.warmupSeconds | quote }}
+  MAX_PARALLEL: {{ .Values.backend.maxParallel | quote }}
+  QUEUE_TIMEOUT: {{ .Values.backend.queueTimeout | quote }}
+  READY_EAGER: {{ ternary "1" "0" .Values.readyEager | quote }}
+  WARMUP_NEVER: {{ ternary "1" "0" .Values.warmupNever | quote }}
+  PREFILL_HIT_SECONDS: {{ .Values.backend.prefillHitSeconds | quote }}
+  PREFILL_MISS_SECONDS: {{ .Values.backend.prefillMissSeconds | quote }}
+  CACHE_CAPACITY: {{ .Values.backend.cacheCapacity | quote }}
+  CHUNK_INTERVAL_SECONDS: {{ .Values.backend.chunkIntervalSeconds | quote }}
+  CHUNKS_PER_REQUEST: {{ .Values.backend.chunksPerRequest | quote }}
+  CPU_BURN_MS_PER_TOKEN: {{ .Values.backend.cpuBurnMsPerToken | quote }}
+  MODEL_VERSION: {{ .Values.modelVersion | quote }}

@@ -1,0 +1,94 @@
+# Deployment: две реплики, probes, ограничения CPU/RAM, мягкое завершение
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw11
+  labels:
+    app: hw11
+spec:
+  replicas: {{ if .Values.real.enabled }}{{ .Values.real.replicas }}{{ else }}{{ .Values.replicaCount }}{{ end }}
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.rollingUpdate.maxUnavailable }}
+      maxSurge: {{ .Values.rollingUpdate.maxSurge }}
+  selector:
+    matchLabels:
+      app: hw11
+  template:
+    metadata:
+      labels:
+        app: hw11
+      annotations:
+        prometheus.io/scrape: {{ index .Values "podAnnotations" "prometheus.io/scrape" | quote }}
+        prometheus.io/port: {{ index .Values "podAnnotations" "prometheus.io/port" | quote }}
+        prometheus.io/path: {{ index .Values "podAnnotations" "prometheus.io/path" | quote }}
+        hw11/model-version: {{ .Values.modelVersion | quote }}
+        hw11/ready-eager: {{ ternary "1" "0" .Values.readyEager | quote }}
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- if .Values.real.enabled }}
+      volumes:
+      - name: hf-cache
+        hostPath:
+          path: {{ .Values.real.hostPath }}
+          type: Directory
+      {{- end }}
+      containers:
+      - name: service
+        image: {{ include "hw11.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8000
+        env:
+        - name: WORKSPACE
+          value: {{ include "hw11.workspace" . | quote }}
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        envFrom:
+        - configMapRef:
+            name: hw11-config
+        {{- if .Values.real.enabled }}
+        - name: BACKEND
+          value: transformers
+        - name: MAX_PARALLEL
+          value: {{ .Values.real.maxParallel | quote }}
+        volumeMounts:
+        - name: hf-cache
+          mountPath: /mnt/hf
+          readOnly: true
+        {{- end }}
+        startupProbe:
+          httpGet:
+            path: /readyz
+            port: http
+          periodSeconds: {{ .Values.probes.startup.periodSeconds }}
+          failureThreshold: {{ .Values.probes.startup.failureThreshold }}
+          timeoutSeconds: {{ .Values.probes.startup.timeoutSeconds }}
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+          periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+          failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+          timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+          failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+          timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+        resources:
+          {{- if .Values.real.enabled }}{{ toYaml .Values.real.resources | nindent 10 }}
+          {{- else }}{{ toYaml .Values.resources | nindent 10 }}{{- end }}
+        lifecycle:
+          preStop:
+            exec:
+              # Держим Pod в Endpoints паузу до SIGTERM — EndpointSlice успевает
+              # обновиться, активные стримы дозавершаются в grace period.
+              command: ["sleep", {{ .Values.preStopSleepSeconds | quote }}]

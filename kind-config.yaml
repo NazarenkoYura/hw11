@@ -1,0 +1,13 @@
+# kind cluster for HW11.
+# extraMounts: host HF cache is mounted into the node so the real-model
+# experience (Qwen3-0.6B) can use a hostPath PV without copying 1.5 GB.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: hw11
+nodes:
+- role: control-plane
+  image: kindest/node:v1.34.0
+  extraMounts:
+  - hostPath: C:/Users/user/.cache/huggingface
+    containerPath: /mnt/hf
+  extraPortMappings: []

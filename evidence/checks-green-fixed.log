@@ -1,0 +1,22 @@
+test_10_warmup_gate_and_version_restore (__main__.Hw11Checks.test_10_warmup_gate_and_version_restore)
+[check1] удалён hw11-5fb49dd4b-2b5kf (10.244.0.41); заменяющий hw11-5fb49dd4b-f59hn (10.244.0.44)
+[check1] прогрев 20.0с: новый Pod вне Endpoints, /readyz=503
+[check1/3] новый Pod готов: sim-A sha=a625e3919648… восстановлен
+Проверки 1 и часть 3: во время прогрева новый Pod вне трафика. ... ok
+test_20_version_after_rollback_via_service (__main__.Hw11Checks.test_20_version_after_rollback_via_service)
+Проверка 2: через Service — ожидаемая версия и хеш после отката. ... ok
+test_30_dialog_continues_after_pod_replacement (__main__.Hw11Checks.test_30_dialog_continues_after_pod_replacement)
+[check2] Service отвечает sim-A sha=a625e3919648… (после отката)
+Проверка 3 (продолжение): диалог продолжается после замены реплики. ... ok
+test_40_failures_accounting (__main__.Hw11Checks.test_40_failures_accounting)
+[check3] диалог продолжился: pod hw11-5fb49dd4b-dv9w7 -> hw11-5fb49dd4b-f59hn (версия sim-A сохранена)
+Проверка 4: 4xx и оборванный поток учитываются отдельными исходами. ... ok
+test_50_dialog_isolation (__main__.Hw11Checks.test_50_dialog_isolation)
+[check4] учёты: client_error и interrupted инкрементированы (retry клиента фиксируется отдельной попыткой в loadgen)
+[check5] диалоги изолированы: alpha pod=hw11-5fb49dd4b-f59hn (cache hit), beta pod=hw11-5fb49dd4b-f59hn (cache hit)
+Проверка 5: два диалога с контрольными строками не смешиваются. ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 28.407s
+
+OK

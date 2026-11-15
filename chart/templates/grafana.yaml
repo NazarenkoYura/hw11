@@ -1,0 +1,92 @@
+# Grafana: provisioning datasource + дашборд из chart/files/hw11-dashboard.json
+{{- if .Values.grafana.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hw11-grafana-provision
+  labels:
+    app: hw11-grafana
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://hw11-prometheus:9090
+      isDefault: true
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+    - name: hw11
+      folder: HW11
+      type: file
+      options:
+        path: /var/lib/grafana/dashboards
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hw11-grafana-dashboard
+  labels:
+    app: hw11-grafana
+data:
+  hw11.json: |-
+{{ .Files.Get "files/hw11-dashboard.json" | indent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw11-grafana
+  labels:
+    app: hw11-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hw11-grafana
+  template:
+    metadata:
+      labels:
+        app: hw11-grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:12.3.0
+        env:
+        - name: GF_AUTH_ANONYMOUS_ENABLED
+          value: "true"
+        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          value: Admin
+        - name: GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH
+          value: /var/lib/grafana/dashboards/hw11.json
+        ports:
+        - containerPort: 3000
+          name: http
+        resources: {{ toYaml .Values.grafana.resources | nindent 10 }}
+        volumeMounts:
+        - name: provision
+          mountPath: /etc/grafana/provisioning
+        - name: dashboards
+          mountPath: /var/lib/grafana/dashboards
+      volumes:
+      - name: provision
+        configMap:
+          name: hw11-grafana-provision
+      - name: dashboards
+        configMap:
+          name: hw11-grafana-dashboard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw11-grafana
+  labels:
+    app: hw11-grafana
+spec:
+  selector:
+    app: hw11-grafana
+  ports:
+  - port: 3000
+    name: http
+{{- end }}

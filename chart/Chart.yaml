@@ -1,0 +1,7 @@
+# Chart.yaml — чарт hw11: сервис + мониторинг (Prometheus/Grafana/metrics-server)
+apiVersion: v2
+name: hw11
+description: MLOPS-26 HW11 — сервис модели в Kubernetes под нагрузкой
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

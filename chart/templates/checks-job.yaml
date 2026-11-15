@@ -1,0 +1,70 @@
+# Собственные проверки hw11: Job в кластере (п.6 задания)
+# helm upgrade --set checks.enabled=true
+{{- if .Values.checks.enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hw11-checks
+  labels:
+    app: hw11
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hw11-checks
+  labels:
+    app: hw11
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "delete"]
+- apiGroups: ["discovery.k8s.io"]
+  resources: ["endpointslices"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hw11-checks
+  labels:
+    app: hw11
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: hw11-checks
+subjects:
+- kind: ServiceAccount
+  name: hw11-checks
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hw11-checks
+  labels:
+    app: hw11
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: hw11
+        role: checks
+    spec:
+      serviceAccountName: hw11-checks
+      restartPolicy: Never
+      containers:
+      - name: checks
+        image: {{ include "hw11.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: TARGET_URL
+          value: http://hw11-svc:8000
+        - name: EXPECTED_VERSION
+          value: sim-{{ .Values.modelVersion }}
+        - name: WARMUP_SECONDS
+          value: {{ .Values.backend.warmupSeconds | quote }}
+        - name: PYTHONIOENCODING
+          value: utf-8
+        command: ["python", "checks/checks.py"]
+{{- end }}

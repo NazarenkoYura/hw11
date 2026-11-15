@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Артефакты модели: байты фиксируются SHA-256 — никакого eol-преобразования
+artifacts/** -text
+*.png -text

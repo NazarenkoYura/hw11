@@ -1,0 +1,136 @@
+# values.yaml — все параметры опыта параметризованы (п.1 задания)
+image:
+  repository: hw11-service
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+# Версия модели-имитатора: A или B (артефакт + accepted.json запечены в образ)
+modelVersion: "A"
+# Заведомо неготовая версия (опыт A.3): прогрев не завершается никогда
+warmupNever: false
+# ИСХОДНЫЙ ДЕФЕКТ опыта A: readiness отвечает готовностью до завершения
+# прогрева. По умолчанию включён (сначала воспроизводим, затем чиним).
+readyEager: true
+
+replicaCount: 2
+
+service:
+  # Основной Service; второй — с sessionAffinity (опыт B) создаётся отдельно
+  type: ClusterIP
+  port: 8000
+  affinityService:
+    enabled: true
+    sessionAffinity: ClientIP   # None|ClientIP — сравнение политик маршрутизации
+    timeoutSeconds: 10800
+
+backend:
+  # Прогрев в секундах (опыт A: заметный, 20с)
+  warmupSeconds: 20
+  # Лимит одновременно обрабатываемых запросов и время ожидания в очереди
+  maxParallel: 2
+  queueTimeout: 30
+  # Имитация локального префиксного кеша (опыт B): стоимость hit/miss и ёмкость
+  prefillHitSeconds: 0.05
+  prefillMissSeconds: 0.4
+  cacheCapacity: 64
+  # Выдача ответа частями
+  chunkIntervalSeconds: 0.05
+  chunksPerRequest: 8
+  # Вычислительная нагрузка на токен (опыт C: делает масштабирование наблюдаемым)
+  cpuBurnMsPerToken: 0
+
+probes:
+  startup:
+    # Прогрев 20с + загрузка: запас 90с (period 3с * failureThreshold 30)
+    periodSeconds: 3
+    failureThreshold: 30
+    timeoutSeconds: 2
+  readiness:
+    periodSeconds: 3
+    failureThreshold: 3
+    timeoutSeconds: 2
+  liveness:
+    periodSeconds: 10
+    failureThreshold: 3
+    timeoutSeconds: 2
+
+resources:
+  requests:
+    # CPU request обязателен для HPA по утилизации (опыт C)
+    cpu: 300m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 512Mi
+
+# Мягкое завершение: дозавершение активных стримов при rolling update (опыт A.2)
+terminationGracePeriodSeconds: 45
+preStopSleepSeconds: 5
+
+rollingUpdate:
+  maxUnavailable: 0
+  maxSurge: 1
+
+# HPA (опыт C): 2..3 реплики по CPU
+hpa:
+  enabled: false           # включается в опыте C
+  minReplicas: 2
+  maxReplicas: 3
+  targetCPUUtilization: 70
+  scaleDownStabilizationSeconds: 60
+
+metricsServer:
+  enabled: true            # resource metrics API для HPA
+
+# Prometheus (сбор с каждого Pod через kubernetes_sd discovery + правила алертов)
+prometheus:
+  enabled: true
+  retention: 2h
+  scrapeInterval: 5s
+  evaluationInterval: 5s
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+grafana:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+# Реальная модель (необязательный опыт): target `real` образа + hostPath PV
+real:
+  enabled: false
+  workspace: /app/artifacts/real
+  imageTag: real-1.0.0
+  replicas: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 3Gi
+    limits:
+      memory: 4Gi
+  hostPath: /mnt/hf/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899dec839871ff9c3e4afc8dcd97bcd53c53a5
+  maxParallel: 1
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8000"
+  prometheus.io/path: "/metrics"
+
+# Пороги алертов (опыт C): показываются pending/firing/resolved
+alerts:
+  latencyP95Seconds: 2      # p95 TTFC выше 2с
+  latencyFor: 2m            # удержание условия 2 минуты
+  errorRateFraction: 0.05   # доля отказов > 5%
+  errorFor: 1m
+
+# Собственные проверки (п.6): Job в кластере, включается на время прогона
+checks:
+  enabled: false

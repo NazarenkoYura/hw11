@@ -1,0 +1,41 @@
+# Обычный Service (балансировка на уровне соединений kube-proxy)
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw11-svc
+  labels:
+    app: hw11
+    hw11/service-kind: plain
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: hw11
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: http
+---
+# Service с привязкой клиента (опыт B): sessionAffinity ClientIP
+{{- if .Values.service.affinityService.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw11-svc-affinity
+  labels:
+    app: hw11
+    hw11/service-kind: affinity
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: hw11
+  sessionAffinity: {{ .Values.service.affinityService.sessionAffinity }}
+  {{- if eq .Values.service.affinityService.sessionAffinity "ClientIP" }}
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: {{ .Values.service.affinityService.timeoutSeconds }}
+  {{- end }}
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: http
+{{- end }}

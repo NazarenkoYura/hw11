@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "model_id": "sim-B",
+  "artifact_uri": "file:///app/artifacts/B/model.json",
+  "file_hashes": {
+    "model.json": "d7b5d36377c397ae743fa939747a88b88855d8cca573136e636dc888f37926bc"
+  },
+  "runtime": {
+    "dtype": "sim",
+    "backend_mode": "simulated",
+    "generation": {
+      "max_new_tokens": 32,
+      "do_sample": false
+    }
+  },
+  "runtime_sha256": "a625e3919648493c67858b05088549d64f59c3597aa865a0eb85075f257d9543"
+}
