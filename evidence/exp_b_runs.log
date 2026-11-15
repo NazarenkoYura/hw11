@@ -1,14 +1,3 @@
-=== 17:45:57Z RUN plain-uniform-ka-1 svc=hw11-svc profile=uniform keepalive=--keepalive ===
-endpoints_ready=2
-{"run": "plain-uniform-ka-1", "records": 637, "planned_first": 637, "ok": 637, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.4531, "ttfc_p95": 0.9112, "ttfc_n": 637, "by_pod": {"hw11-7c9c855df9-2lwcf": {"ok": 311, "ttfc_p50": 0.4532, "ttfc_p95": 1.0378, "cache_hit_rate": 0.441, "sessions": 32}, "hw11-7c9c855df9-vfjq9": {"ok": 326, "ttfc_p50": 0.453, "ttfc_p95": 0.9096, "cache_hit_rate": 0.469, "sessions": 32}}}
-=== 17:49:03Z RUN plain-uniform-ka-2 svc=hw11-svc profile=uniform keepalive=--keepalive ===
-endpoints_ready=2
-{"run": "plain-uniform-ka-2", "records": 634, "planned_first": 634, "ok": 634, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.4537, "ttfc_p95": 0.9419, "ttfc_n": 634, "by_pod": {"hw11-7ff8c8f7b-6xpr7": {"ok": 321, "ttfc_p50": 0.4537, "ttfc_p95": 1.0404, "cache_hit_rate": 0.486, "sessions": 32}, "hw11-7ff8c8f7b-hb5st": {"ok": 313, "ttfc_p50": 0.4537, "ttfc_p95": 0.9137, "cache_hit_rate": 0.482, "sessions": 32}}}
-=== 17:52:10Z RUN plain-uniform-ka-3 svc=hw11-svc profile=uniform keepalive=--keepalive ===
-endpoints_ready=2
-{"run": "plain-uniform-ka-3", "records": 644, "planned_first": 644, "ok": 644, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.4533, "ttfc_p95": 0.9127, "ttfc_n": 644, "by_pod": {"hw11-84cffdcd6d-79g6s": {"ok": 305, "ttfc_p50": 0.4533, "ttfc_p95": 0.9118, "cache_hit_rate": 0.456, "sessions": 32}, "hw11-84cffdcd6d-z5hn7": {"ok": 339, "ttfc_p50": 0.4532, "ttfc_p95": 0.9763, "cache_hit_rate": 0.51, "sessions": 32}}}
-=== 17:55:17Z RUN plain-skew-ka-1 svc=hw11-svc profile=skew keepalive=--keepalive ===
-endpoints_ready=2
-{"run": "plain-skew-ka-1", "records": 720, "planned_first": 720, "ok": 312, "errors": 408, "error_rate": 0.5667, "ttfc_p50": 0.4531, "ttfc_p95": 0.7033, "ttfc_n": 312, "by_pod": {"hw11-5447cff49d-5n6wt": {"ok": 139, "ttfc_p50": 0.4532, "ttfc_p95": 0.6157, "cache_hit_rate": 0.353, "sessions": 31}, "hw11-5447cff49d-vlvzx": {"ok": 173, "ttfc_p50": 0.4531, "ttfc_p95": 0.7294, "cache_hit_rate": 0.451, "sessions": 32}}}
-=== 17:58:23Z RUN plain-skew-ka-2 svc=hw11-svc profile=skew keepalive=--keepalive ===
-endpoints_ready=2
+=== 18:20:28Z RUN plain-uniform-ka-1 svc=hw11-svc profile=uniform keepalive=--keepalive ===
+{"run": "plain-skew-ka-2", "records": 0, "planned_first": 0, "ok": 0, "errors": 0, "error_rate": 0.0, "ttfc_p50": null, "ttfc_p95": null, "ttfc_n": 0, "by_pod": {}}
+=== 18:22:02Z RUN plain-skew-ka-3 svc=hw11-svc profile=skew keepalive=--keepalive ===

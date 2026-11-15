@@ -87,6 +87,7 @@ def build_schedule(client_id: int, n_clients: int, profile: str, total_rate: flo
                     "content": f"{BASE_PROMPTS[(client_id + session_idx) % len(BASE_PROMPTS)]} (ход {k})"}
                    for k in range(turn)]
         prompt = f"{BASE_PROMPTS[(client_id + session_idx) % len(BASE_PROMPTS)]} (ход {turn})"
+        history = history[-19:]  # сервер принимает максимум 20 элементов истории
         entries.append({
             "send_at": send_at, "session_id": session_id, "turn": turn,
             "prompt": prompt, "history": history,
@@ -158,6 +159,7 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
                                 stream=True) as resp:
                         status = resp.status_code
                         if status == 200:
+                            seen_done = False
                             for line in resp.iter_lines(decode_unicode=False):
                                 if not line or not line.startswith(b"data: "):
                                     continue
@@ -171,13 +173,14 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
                                     unwarmed = ev.get("unwarmed")
                                     chunks = ev.get("chunks", 0)
                                     queue_s = ev.get("queue_seconds")
+                                    seen_done = True
                                     continue
                                 if ev.get("chunk_index") == 0:
                                     ttfc = now_mono - t_send
                                     chunks += 1
                                 else:
                                     chunks += 1
-                            else:
+                            if not seen_done:
                                 outcome = "interrupted"
                         else:
                             outcome = f"http_{status}"

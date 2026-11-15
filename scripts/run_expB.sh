@@ -10,6 +10,22 @@ mkdir -p results/eB evidence
 LOG=evidence/exp_b_runs.log
 : > "$LOG"
 
+wait_quiescence() {
+  # Ждём: ровно 2 готовых Pod'а сервиса, ни одного Terminating, один активный RS.
+  for i in $(seq 1 40); do
+    n_term=$(kubectl get pods -l 'app=hw11,role!=checks' --no-headers 2>/dev/null | grep -c Terminating)
+    n_ready=$(kubectl get pods -l 'app=hw11,role!=checks' --no-headers 2>/dev/null | grep -c " 1/1 ")
+    n_all=$(kubectl get pods -l 'app=hw11,role!=checks' --no-headers 2>/dev/null | wc -l)
+    n_rs=$(kubectl get rs -l app=hw11 --no-headers 2>/dev/null | awk '$2>0' | wc -l)
+    if [ "$n_term" -eq 0 ] && [ "$n_ready" -eq 2 ] && [ "$n_all" -eq 2 ] && [ "$n_rs" -eq 1 ]; then
+      return 0
+    fi
+    sleep 3
+  done
+  echo "WARNING: quiescence timeout (term=$n_term ready=$n_ready all=$n_all rs=$n_rs)" >> "$LOG"
+  return 1
+}
+
 run_combo() {
   local label="$1" svc="$2" profile="$3" ka="$4"
   for run in 1 2 3; do
@@ -18,7 +34,8 @@ run_combo() {
     # Явное начальное состояние: рестарт Pod'ов (чистый кеш + прогрев 20с)
     kubectl rollout restart deployment/hw11 >/dev/null 2>&1
     kubectl rollout status deployment/hw11 --timeout=180s >/dev/null 2>&1
-    sleep 5
+    wait_quiescence || true
+    sleep 3
     local clients
     clients=$(kubectl get endpoints "$svc" -o jsonpath='{.subsets[0].addresses[*].ip}' 2>/dev/null | wc -w)
     echo "endpoints_ready=$clients" >> "$LOG"

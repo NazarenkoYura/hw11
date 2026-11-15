@@ -73,6 +73,11 @@ spec:
       - name: provision
         configMap:
           name: hw11-grafana-provision
+          items:
+          - key: datasources.yaml
+            path: datasources/datasources.yaml
+          - key: dashboards.yaml
+            path: dashboards/dashboards.yaml
       - name: dashboards
         configMap:
           name: hw11-grafana-dashboard
