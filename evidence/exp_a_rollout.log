@@ -1,0 +1,5 @@
+rollout_start_utc=2026-11-15T17:21:22Z
+rollout_done_utc=2026-11-15T17:22:11Z
+rollout_A2_B_start_utc=2026-11-15T17:22:20Z
+rollout_A2_B_done_utc=2026-11-15T17:22:20Z
+rollback_utc=2026-11-15T17:28:24Z

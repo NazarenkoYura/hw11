@@ -1,0 +1,5 @@
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+    Restart Count:  1
+  Type     Reason     Age                 From               Message

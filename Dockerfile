@@ -8,6 +8,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY service.py backends.py ./
 COPY artifacts/sim ./artifacts/sim
+COPY artifacts/real ./artifacts/real
 COPY scripts/loadgen.py ./scripts/loadgen.py
 COPY checks ./checks
 # Непривилегированный пользователь

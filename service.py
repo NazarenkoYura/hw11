@@ -140,6 +140,12 @@ class ServiceState:
             if isinstance(runtime_limit, int) and 0 < runtime_limit <= MAX_NEW_TOKENS_LIMIT:
                 self.max_new_tokens_limit = runtime_limit
             model_dir = self.root  # артефакт-имитатор лежит рядом с accepted.json
+            if self.backend_name == "transformers":
+                # Реальные веса: локальный snapshot из манифеста (hostPath PV с
+                # кэшем HuggingFace) — доступен всем репликам на ноде.
+                local = manifest.get("local_path") or manifest.get("artifact_uri", "")
+                candidate = Path(str(local).replace("file://", ""))
+                model_dir = candidate if candidate.is_dir() else None
             self.backend = backends.create_backend(
                 self.backend_name, manifest, model_dir=model_dir, device=self.device,
                 **self.backend_kwargs)
@@ -351,6 +357,8 @@ def create_app(root: Path, warmup_seconds: float = 20.0, backend_name: str = "si
     @app.get("/healthz")
     def healthz():
         """Liveness: процесс жив. Всегда 200."""
+        READY_G.set(1 if state.is_ready() else 0)
+        WARMED_G.set(1 if state.warmup_finished.is_set() else 0)
         return {"alive": True}
 
     @app.get("/readyz")
@@ -358,6 +366,8 @@ def create_app(root: Path, warmup_seconds: float = 20.0, backend_name: str = "si
         """Readiness для probes. Дефект (READY_EAGER=1): 200 сразу после старта
         HTTP-процесса, до конца прогрева. Исправление: 200 только после
         фактической загрузки артефакта и завершённого прогрева."""
+        READY_G.set(1 if state.is_ready() else 0)
+        WARMED_G.set(1 if state.warmup_finished.is_set() else 0)
         if state.is_ready():
             return {"ready": True, "pod": state.pod}
         body = {"ready": False, "warmup_finished": state.warmup_finished.is_set(),

@@ -1,0 +1,14 @@
+kill_utc=2026-11-15T17:31:09Z pod=hw11-65f57cdbfd-8fbbf
+kill_utc=2026-11-15T17:32:51Z pod=hw11-65f57cdbfd-8fbbf
+forced_stop_utc=2026-11-15T17:33:20Z container=
+forced_stop_utc=2026-11-15T17:34:00Z container=3ded3890dda6a pod=hw11-65f57cdbfd-8fbbf
+6m18s       Normal    Killing                pod/hw11-7747886446-m2xbt    Stopping container service
+4m48s       Normal    Killing                pod/loadgen-a3r              Stopping container loadgen-a3r
+3m58s       Normal    Started                pod/loadgen-a4               Started container loadgen-a4
+2m16s       Normal    Started                pod/loadgen-a4b              Started container loadgen-a4b
+41s         Normal    Started                pod/hw11-65f57cdbfd-8fbbf    Started container service
+22s         Warning   Unhealthy              pod/hw11-65f57cdbfd-8fbbf    Startup probe failed: HTTP probe failed with statuscode: 503
+third_forced_stop_utc=2026-11-15T17:36:42Z container=af3626fa01c72
+fourth_forced_stop_utc=2026-11-15T17:37:31Z container=0969354b5593e
+waiting_recovery_utc=2026-11-15T17:38:14Z
+recovered_ready_utc=2026-11-15T17:38:26Z

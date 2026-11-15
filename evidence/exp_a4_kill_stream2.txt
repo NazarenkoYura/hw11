@@ -1,0 +1,2 @@
+first_chunk_at=2026-11-15T17:37:24Z
+broken_eof_after_chunks=15

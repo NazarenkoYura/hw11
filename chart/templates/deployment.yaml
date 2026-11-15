@@ -49,6 +49,15 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        # Флаги опыта A в шаблоне Pod (а не только в ConfigMap): их изменение
+        # обязано вызывать rolling update, иначе дефект не воспроизводится.
+        - name: READY_EAGER
+          value: {{ ternary "1" "0" .Values.readyEager | quote }}
+        - name: WARMUP_NEVER
+          value: {{ ternary "1" "0" .Values.warmupNever | quote }}
+        # Вычислительная нагрузка (опыт C): изменение должно пересоздавать Pod
+        - name: CPU_BURN_MS_PER_TOKEN
+          value: {{ .Values.backend.cpuBurnMsPerToken | quote }}
         envFrom:
         - configMapRef:
             name: hw11-config

@@ -277,7 +277,6 @@ class TransformersBackend:
                     first_done = True
                     n += 1
             worker.join()
-        yield {"done": True, "ttfc_backend_seconds": None}
 
     def generate(self, prompt: str, limit: int, session_id=None, turn=0,
                  _internal: bool = False) -> dict:

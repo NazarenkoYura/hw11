@@ -1,0 +1,23 @@
+{"utc": "2026-11-15T17:26:55Z", "level": "INFO", "pod": "hw11-7747886446-m2xbt", "model_id": "sim-B", "runtime_sha256": "a625e3919648493c67858b05088549d64f59c3597aa865a0eb85075f257d9543", "backend": "simulated", "message": "load_ok"}
+{"utc": "2026-11-15T17:27:16Z", "level": "ERROR", "pod": "hw11-7747886446-m2xbt", "reason": "WARMUP_NEVER=1 (заведомо неготовая версия)", "message": "warmup_withheld"}
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/local/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 503: Service Unavailable
+command terminated with exit code 1

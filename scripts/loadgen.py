@@ -143,11 +143,16 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
             status, outcome = None, "ok"
             pod = version = mode = None
             cache_result = None
+            unwarmed = None
+            queue_s = None
             chunks = 0
             ttfc = itl_mean = answer_s = None
             try:
                 if args.stream:
                     # Потоковый ответ: монотонные часы на клиенте, части через SSE.
+                    # ВАЖНО: потребляем ответ ДО КОНЦА (не break по done) — иначе
+                    # urllib3 считает соединение «неочищенным», отбрасывает его и
+                    # keep-alive (привязка к соединению) молча перестаёт работать.
                     opener = session_local.post if session_local else requests.post
                     with opener(args.url + "/generate", json=payload, timeout=args.timeout,
                                 stream=True) as resp:
@@ -163,8 +168,10 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
                                     pod, version, mode = ev.get("pod"), ev.get(
                                         "model_version"), ev.get("backend_mode")
                                     cache_result = ev.get("cache_result")
+                                    unwarmed = ev.get("unwarmed")
                                     chunks = ev.get("chunks", 0)
-                                    break
+                                    queue_s = ev.get("queue_seconds")
+                                    continue
                                 if ev.get("chunk_index") == 0:
                                     ttfc = now_mono - t_send
                                     chunks += 1
@@ -186,6 +193,7 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
                         pod, version, mode = body.get("pod"), body.get(
                             "model_version"), body.get("backend_mode")
                         cache_result = body.get("cache_result")
+                        unwarmed = body.get("unwarmed")
                         chunks = body.get("chunks", 0)
                         ttfc = body.get("ttfc_seconds")
                     else:
@@ -202,6 +210,8 @@ def run_client(client_id: int, args, out_file, stop_event, ready_event):
                 "answer_seconds": round(answer_s, 4) if answer_s is not None else None,
                 "pod": pod, "model_version": version, "backend_mode": mode,
                 "chunks": chunks, "cache_result": cache_result,
+                "unwarmed": unwarmed,
+                "queue_seconds_server": round(queue_s, 4) if queue_s is not None else None,
             })
             if outcome in ("ok", "interrupted"):
                 records.append(rec)
