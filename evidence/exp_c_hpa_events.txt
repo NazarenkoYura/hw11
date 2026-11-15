@@ -1,0 +1,2 @@
+7m18s       Normal    ScalingReplicaSet   deployment/hw11                       (combined from similar events): Scaled up replica set hw11-fdffb4f4d from 0 to 1
+6m2s        Normal    SuccessfulRescale   horizontalpodautoscaler/hw11          New size: 3; reason: cpu resource utilization (percentage of request) above target

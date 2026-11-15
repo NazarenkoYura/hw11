@@ -22,6 +22,8 @@ CMD ["python", "service.py"]
 # через hostPath PV /mnt/hf — см. kind-config.yaml extraMounts).
 FROM base AS real
 USER root
-RUN pip install --no-cache-dir torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu \
-    && pip install --no-cache-dir transformers==5.22.1 peft==0.21.2
+RUN pip install --no-cache-dir --timeout 120 --retries 8 \
+      torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir --timeout 120 --retries 8 \
+      transformers==5.22.1 peft==0.21.2
 USER 10001:10001

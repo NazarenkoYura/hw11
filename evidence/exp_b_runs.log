@@ -1,3 +1,52 @@
-=== 18:20:28Z RUN plain-uniform-ka-1 svc=hw11-svc profile=uniform keepalive=--keepalive ===
-{"run": "plain-skew-ka-2", "records": 0, "planned_first": 0, "ok": 0, "errors": 0, "error_rate": 0.0, "ttfc_p50": null, "ttfc_p95": null, "ttfc_n": 0, "by_pod": {}}
-=== 18:22:02Z RUN plain-skew-ka-3 svc=hw11-svc profile=skew keepalive=--keepalive ===
+=== 18:24:00Z RUN plain-uniform-ka-1 svc=hw11-svc profile=uniform keepalive=--keepalive ===
+endpoints_ready=2
+{"run": "plain-uniform-ka-1", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.1026, "ttfc_p95": 0.1045, "ttfc_n": 720, "by_pod": {"hw11-c46b497c9-tpc4v": {"ok": 360, "ttfc_p50": 0.1026, "ttfc_p95": 0.1045, "cache_hit_rate": 0.956, "sessions": 16}, "hw11-c46b497c9-z9sn6": {"ok": 360, "ttfc_p50": 0.1026, "ttfc_p95": 0.1045, "cache_hit_rate": 0.956, "sessions": 16}}}
+=== 18:27:11Z RUN plain-uniform-ka-2 svc=hw11-svc profile=uniform keepalive=--keepalive ===
+endpoints_ready=2
+{"run": "plain-uniform-ka-2", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.2549, "ttfc_p95": 0.4159, "ttfc_n": 720, "by_pod": {"hw11-84b8765f58-2ns5v": {"ok": 180, "ttfc_p50": 0.1029, "ttfc_p95": 0.1044, "cache_hit_rate": 0.956, "sessions": 8}, "hw11-84b8765f58-rsfx2": {"ok": 540, "ttfc_p50": 0.4054, "ttfc_p95": 0.4161, "cache_hit_rate": 0.956, "sessions": 24}}}
+=== 18:30:23Z RUN plain-uniform-ka-3 svc=hw11-svc profile=uniform keepalive=--keepalive ===
+endpoints_ready=2
+{"run": "plain-uniform-ka-3", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.2044, "ttfc_p95": 0.4631, "ttfc_n": 720, "by_pod": {"hw11-6968798c55-rgvht": {"ok": 180, "ttfc_p50": 0.1029, "ttfc_p95": 0.106, "cache_hit_rate": 0.956, "sessions": 8}, "hw11-6968798c55-slqb5": {"ok": 540, "ttfc_p50": 0.4564, "ttfc_p95": 0.4642, "cache_hit_rate": 0.956, "sessions": 24}}}
+=== 18:33:35Z RUN plain-skew-ka-1 svc=hw11-svc profile=skew keepalive=--keepalive ===
+endpoints_ready=2
+=== 18:36:47Z RUN plain-skew-ka-2 svc=hw11-svc profile=skew keepalive=--keepalive ===
+endpoints_ready=2
+=== 18:39:59Z RUN plain-skew-ka-3 svc=hw11-svc profile=skew keepalive=--keepalive ===
+endpoints_ready=2
+=== 18:46:43Z RUN plain-skew-ka-1 svc=hw11-svc profile=skew keepalive=--keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-ka-1", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.1032, "ttfc_p95": 0.6633, "ttfc_n": 720, "by_pod": {"hw11-5bb8f966cd-8lxzs": {"ok": 361, "ttfc_p50": 0.1033, "ttfc_p95": 0.6902, "cache_hit_rate": 0.881, "sessions": 28}, "hw11-5bb8f966cd-wpk8h": {"ok": 359, "ttfc_p50": 0.1031, "ttfc_p95": 0.6079, "cache_hit_rate": 0.877, "sessions": 28}}}
+=== 18:49:55Z RUN plain-skew-ka-2 svc=hw11-svc profile=skew keepalive=--keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-ka-2", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.1037, "ttfc_p95": 0.6024, "ttfc_n": 720, "by_pod": {"hw11-6f47bf4dbc-j8pz9": {"ok": 369, "ttfc_p50": 0.1041, "ttfc_p95": 0.6324, "cache_hit_rate": 0.864, "sessions": 28}, "hw11-6f47bf4dbc-ptnk4": {"ok": 351, "ttfc_p50": 0.1036, "ttfc_p95": 0.5726, "cache_hit_rate": 0.869, "sessions": 27}}}
+=== 18:53:08Z RUN plain-skew-ka-3 svc=hw11-svc profile=skew keepalive=--keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-ka-3", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.1034, "ttfc_p95": 0.6497, "ttfc_n": 720, "by_pod": {"hw11-856bdcdcdf-bktp2": {"ok": 360, "ttfc_p50": 0.1034, "ttfc_p95": 0.6497, "cache_hit_rate": 0.861, "sessions": 28}, "hw11-856bdcdcdf-j5g9b": {"ok": 360, "ttfc_p50": 0.1034, "ttfc_p95": 0.646, "cache_hit_rate": 0.867, "sessions": 28}}}
+=== 18:56:51Z RUN affin-uniform-noka-1 svc=hw11-svc-affinity profile=uniform keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-uniform-noka-1", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 2.3928, "ttfc_p95": 2.3966, "ttfc_n": 720, "by_pod": {"hw11-5f958ddfb6-2pdhr": {"ok": 540, "ttfc_p50": 2.3935, "ttfc_p95": 2.3969, "cache_hit_rate": 0.956, "sessions": 24}, "hw11-5f958ddfb6-cxjz4": {"ok": 180, "ttfc_p50": 0.1036, "ttfc_p95": 0.1051, "cache_hit_rate": 0.956, "sessions": 8}}}
+=== 19:00:03Z RUN affin-uniform-noka-2 svc=hw11-svc-affinity profile=uniform keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-uniform-noka-2", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.1035, "ttfc_p95": 0.637, "ttfc_n": 720, "by_pod": {"hw11-7947c69689-6d4wn": {"ok": 360, "ttfc_p50": 0.1035, "ttfc_p95": 0.5824, "cache_hit_rate": 0.956, "sessions": 16}, "hw11-7947c69689-7v6jv": {"ok": 360, "ttfc_p50": 0.1035, "ttfc_p95": 0.6754, "cache_hit_rate": 0.956, "sessions": 16}}}
+=== 19:03:15Z RUN affin-uniform-noka-3 svc=hw11-svc-affinity profile=uniform keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-uniform-noka-3", "records": 720, "planned_first": 720, "ok": 720, "errors": 0, "error_rate": 0.0, "ttfc_p50": 2.3898, "ttfc_p95": 2.3944, "ttfc_n": 720, "by_pod": {"hw11-84fb758b85-5rv8n": {"ok": 180, "ttfc_p50": 0.1034, "ttfc_p95": 0.1051, "cache_hit_rate": 0.956, "sessions": 8}, "hw11-84fb758b85-lmd8t": {"ok": 540, "ttfc_p50": 2.391, "ttfc_p95": 2.395, "cache_hit_rate": 0.956, "sessions": 24}}}
+=== 19:06:27Z RUN affin-skew-noka-1 svc=hw11-svc-affinity profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-skew-noka-1", "records": 596, "planned_first": 596, "ok": 596, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.7382, "ttfc_p95": 1.243, "ttfc_n": 596, "by_pod": {"hw11-866c654545-f24br": {"ok": 548, "ttfc_p50": 0.7412, "ttfc_p95": 1.2658, "cache_hit_rate": 0.956, "sessions": 24}, "hw11-866c654545-h76pk": {"ok": 48, "ttfc_p50": 0.1035, "ttfc_p95": 0.454, "cache_hit_rate": 0.833, "sessions": 8}}}
+=== 19:09:39Z RUN affin-skew-noka-2 svc=hw11-svc-affinity profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-skew-noka-2", "records": 649, "planned_first": 649, "ok": 649, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.5603, "ttfc_p95": 0.9686, "ttfc_n": 649, "by_pod": {"hw11-66dfcd745-6mkg4": {"ok": 96, "ttfc_p50": 0.1036, "ttfc_p95": 0.454, "cache_hit_rate": 0.833, "sessions": 16}, "hw11-66dfcd745-zmgpt": {"ok": 553, "ttfc_p50": 0.5609, "ttfc_p95": 0.9692, "cache_hit_rate": 0.971, "sessions": 16}}}
+=== 19:12:51Z RUN affin-skew-noka-3 svc=hw11-svc-affinity profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "affin-skew-noka-3", "records": 650, "planned_first": 650, "ok": 650, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.5591, "ttfc_p95": 0.9083, "ttfc_n": 650, "by_pod": {"hw11-76cbd89f66-5686k": {"ok": 96, "ttfc_p50": 0.1036, "ttfc_p95": 0.4538, "cache_hit_rate": 0.833, "sessions": 16}, "hw11-76cbd89f66-9rtzn": {"ok": 554, "ttfc_p50": 0.5597, "ttfc_p95": 0.912, "cache_hit_rate": 0.971, "sessions": 16}}}
+=== 19:16:04Z RUN plain-skew-noka-1 svc=hw11-svc profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-noka-1", "records": 672, "planned_first": 672, "ok": 672, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.5569, "ttfc_p95": 1.2884, "ttfc_n": 672, "by_pod": {"hw11-7c9d68ddcc-8cbvn": {"ok": 363, "ttfc_p50": 0.6154, "ttfc_p95": 1.3531, "cache_hit_rate": 0.507, "sessions": 32}, "hw11-7c9d68ddcc-xltgl": {"ok": 309, "ttfc_p50": 0.454, "ttfc_p95": 1.2557, "cache_hit_rate": 0.43, "sessions": 31}}}
+=== 19:19:16Z RUN plain-skew-noka-2 svc=hw11-svc profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-noka-2", "records": 692, "planned_first": 692, "ok": 692, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.4996, "ttfc_p95": 1.315, "ttfc_n": 692, "by_pod": {"hw11-84c479bc4f-q7svq": {"ok": 351, "ttfc_p50": 0.5575, "ttfc_p95": 1.3675, "cache_hit_rate": 0.487, "sessions": 32}, "hw11-84c479bc4f-qmw8p": {"ok": 341, "ttfc_p50": 0.4535, "ttfc_p95": 1.2576, "cache_hit_rate": 0.496, "sessions": 32}}}
+=== 19:22:28Z RUN plain-skew-noka-3 svc=hw11-svc profile=skew keepalive=--no-keepalive workers=4 ===
+endpoints_ready=2
+{"run": "plain-skew-noka-3", "records": 685, "planned_first": 685, "ok": 685, "errors": 0, "error_rate": 0.0, "ttfc_p50": 0.5325, "ttfc_p95": 1.2744, "ttfc_n": 685, "by_pod": {"hw11-7b5cff96b6-llkt5": {"ok": 340, "ttfc_p50": 0.5239, "ttfc_p95": 1.2693, "cache_hit_rate": 0.488, "sessions": 31}, "hw11-7b5cff96b6-nxx4g": {"ok": 345, "ttfc_p50": 0.5518, "ttfc_p95": 1.2744, "cache_hit_rate": 0.496, "sessions": 31}}}
+EXP B PART2 DONE 19:25:40Z

@@ -97,13 +97,19 @@ def build_schedule(client_id: int, n_clients: int, profile: str, total_rate: flo
     return entries
 
 
-def run_client(client_id: int, args, out_file, stop_event, ready_event):
-    """Поток одного клиента: отправка по расписанию, запись результатов."""
+def run_worker(client_id: int, worker_id: int, workers: int, args, out_file,
+               stop_event, ready_event):
+    """Поток-воркер клиента: своя доля расписания и своё соединение.
+
+    Несколько воркеров делают нагрузку клиента КОНКУРЕНТНОЙ (последовательный
+    клиент ограничен ~1/время_ответа и не способен создать очередь на сервере).
+    При keep-alive каждый воркер держит собственное соединение — как реальный
+    многопоточный клиент."""
     session_local = requests.Session() if args.keepalive else None
     start_wall = time.time()
     start_mono = time.perf_counter()
     schedule = build_schedule(client_id, args.clients, args.profile, args.rate,
-                              args.duration, args.sessions)
+                              args.duration, args.sessions)[worker_id::workers]
     ready_event.set()
     records = []
     for entry in schedule:
@@ -303,6 +309,8 @@ def main():
     parser.add_argument("--no-keepalive", dest="keepalive", action="store_false")
     parser.add_argument("--timeout", type=float, default=45.0)
     parser.add_argument("--retries", type=int, default=0)
+    parser.add_argument("--workers", type=int, default=1,
+                        help="параллельных воркеров у клиента (конкурентная нагрузка)")
     parser.add_argument("--out", default=os.getenv("OUT_DIR", "/results"))
     parser.add_argument("--label", default="run")
     args = parser.parse_args()
@@ -315,10 +323,20 @@ def main():
 
     stop_event = threading.Event()
     ready_event = threading.Event()
-    rec = run_client(args.client, args, out_file, stop_event, ready_event)
-    ok = [r for r in rec if r["outcome"] == "ok"]
-    line = {"client": args.client, "sent": len(rec), "ok": len(ok),
-            "send_delay_p95": pctl([r["send_delay_s"] for r in rec], 0.95)}
+    workers = max(1, int(os.getenv("WORKERS", str(args.workers))))
+    threads = []
+    for wid in range(workers):
+        out_file_w = out_dir / f"requests_c{args.client}_w{wid}_{args.label}.jsonl"
+        if out_file_w.exists():
+            out_file_w.unlink()
+        t = threading.Thread(target=run_worker,
+                             args=(args.client, wid, workers, args, out_file_w,
+                                   stop_event, ready_event), daemon=True)
+        t.start()
+        threads.append(t)
+    for t in threads:
+        t.join(timeout=args.duration + 90)
+    line = {"client": args.client, "workers": workers}
     print(json.dumps(line, ensure_ascii=False), flush=True)
 
 

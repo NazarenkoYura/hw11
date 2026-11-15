@@ -108,7 +108,7 @@ def chart2():
     ax = axes[0]
     xs = range(len(pods))
     data = [[r["ttfc_seconds"] for r in ok if r["pod"] == p] for p in pods]
-    bp = ax.boxplot(data, labels=[p.split("-")[-1] for p in pods], showfliers=False,
+    bp = ax.boxplot(data, tick_labels=[p.split("-")[-1] for p in pods], showfliers=False,
                     patch_artist=True)
     for box in bp["boxes"]:
         box.set(facecolor="#9fb8cc")
@@ -121,6 +121,7 @@ def chart2():
     hit = [statistics.mean([1 if r.get("cache_result") == "hit" else 0
                             for r in ok if r["pod"] == p]) for p in pods]
     bars = ax.bar(xs, counts, color="#4c72b0", width=0.55, label="запросов (шт)")
+    ax.set_ylim(0, max(counts) * 1.22)
     for i, (c, h) in enumerate(zip(counts, hit)):
         ax.text(i, c + max(counts) * 0.02, f"{c}\nhit {h*100:.0f}%", ha="center", fontsize=8)
     ax.set_ylabel("Успешных запросов за 3 прогона × 120с")
@@ -242,7 +243,7 @@ def chart4():
     ax.set_ylabel("Число реплик Deployment")
     ax2.set_ylabel("CPU утилизация относительно request, %")
     ax.set_xlabel("UTC; нагрузка: фаза 1 — 2.5 rps с вычислительной нагрузкой 40мс/токен,\n"
-                  "фаза 2 — 12 rps (перегрузка), затем снятие; окно стабилизации scale-down 60с")
+                  "19:55:52 снятие (3→2 через 66с; окно стабилизации 60с); 20:00+ — перегрузки для алертов")
     ax.set_title("Опыт C: HPA autoscaling/v2 — масштабирование 2→3→2 по CPU")
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
     h1, l1 = ax.get_legend_handles_labels()

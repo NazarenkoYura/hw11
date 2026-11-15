@@ -1,0 +1,72 @@
+{"utc": "2026-11-15T20:01:10Z", "alerts": []}
+{"utc": "2026-11-15T20:01:20Z", "alerts": []}
+{"utc": "2026-11-15T20:01:30Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 4.0}]}
+{"utc": "2026-11-15T20:01:40Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 6.0}]}
+{"utc": "2026-11-15T20:01:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 12.42}]}
+{"utc": "2026-11-15T20:02:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 14.06}]}
+{"utc": "2026-11-15T20:02:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 16.75}]}
+{"utc": "2026-11-15T20:02:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 18.58}]}
+{"utc": "2026-11-15T20:02:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 19.29}]}
+{"utc": "2026-11-15T20:02:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 22.37}]}
+{"utc": "2026-11-15T20:02:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 23.74}]}
+{"utc": "2026-11-15T20:03:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 23.23}]}
+{"utc": "2026-11-15T20:03:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 22.32}]}
+{"utc": "2026-11-15T20:03:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 22.55}]}
+{"utc": "2026-11-15T20:03:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 24.92}]}
+{"utc": "2026-11-15T20:03:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 26.18}]}
+{"utc": "2026-11-15T20:03:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 26.28}]}
+{"utc": "2026-11-15T20:04:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 26.31}]}
+{"utc": "2026-11-15T20:04:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 26.91}]}
+{"utc": "2026-11-15T20:04:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.39}]}
+{"utc": "2026-11-15T20:04:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.54}]}
+{"utc": "2026-11-15T20:04:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.72}]}
+{"utc": "2026-11-15T20:04:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.9}]}
+{"utc": "2026-11-15T20:05:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.13}]}
+{"utc": "2026-11-15T20:05:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.35}]}
+{"utc": "2026-11-15T20:05:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.42}]}
+{"utc": "2026-11-15T20:05:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.39}]}
+{"utc": "2026-11-15T20:05:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.25}]}
+{"utc": "2026-11-15T20:05:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.23}]}
+{"utc": "2026-11-15T20:06:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 28.13}]}
+{"utc": "2026-11-15T20:06:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.89}]}
+{"utc": "2026-11-15T20:06:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.56}]}
+{"utc": "2026-11-15T20:06:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 27.11}]}
+{"utc": "2026-11-15T20:06:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 26.5}]}
+{"utc": "2026-11-15T20:06:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 25.87}]}
+{"utc": "2026-11-15T20:07:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 24.56}]}
+{"utc": "2026-11-15T20:07:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 21.72}]}
+{"utc": "2026-11-15T20:07:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 18.61}]}
+{"utc": "2026-11-15T20:07:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 17.34}]}
+{"utc": "2026-11-15T20:07:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 16.22}]}
+{"utc": "2026-11-15T20:07:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 14.94}]}
+{"utc": "2026-11-15T20:08:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 14.76}]}
+{"utc": "2026-11-15T20:08:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 14.79}]}
+{"utc": "2026-11-15T20:08:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 14.63}]}
+{"utc": "2026-11-15T20:08:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 9.89}]}
+{"utc": "2026-11-15T20:08:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 5.8}]}
+{"utc": "2026-11-15T20:08:51Z", "alerts": []}
+{"utc": "2026-11-15T20:09:01Z", "alerts": []}
+{"utc": "2026-11-15T20:09:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 2.75}]}
+{"utc": "2026-11-15T20:09:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 7.32}]}
+{"utc": "2026-11-15T20:09:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 12.06}]}
+{"utc": "2026-11-15T20:09:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 14.19}]}
+{"utc": "2026-11-15T20:09:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 18.39}]}
+{"utc": "2026-11-15T20:10:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 19.53}]}
+{"utc": "2026-11-15T20:10:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 25.33}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.22}]}
+{"utc": "2026-11-15T20:10:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 25.77}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.44}]}
+{"utc": "2026-11-15T20:10:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 28.1}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.57}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.16}]}
+{"utc": "2026-11-15T20:10:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 27.86}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.77}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.38}]}
+{"utc": "2026-11-15T20:10:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 27.82}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 1.0}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.55}]}
+{"utc": "2026-11-15T20:11:01Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "pending", "value": 28.36}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 1.0}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.7}]}
+{"utc": "2026-11-15T20:11:11Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 34.06}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.8}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.45}]}
+{"utc": "2026-11-15T20:11:21Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 36.19}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.84}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.5}]}
+{"utc": "2026-11-15T20:11:31Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 36.95}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.68}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.93}]}
+{"utc": "2026-11-15T20:11:41Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 37.65}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.92}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.75}]}
+{"utc": "2026-11-15T20:11:51Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 41.04}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.68}]}
+{"utc": "2026-11-15T20:12:02Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 42.18}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.62}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.5}]}
+{"utc": "2026-11-15T20:12:12Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 42.51}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.46}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.74}]}
+{"utc": "2026-11-15T20:12:22Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 42.32}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.76}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.44}]}
+{"utc": "2026-11-15T20:12:32Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 41.95}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.4}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.7}]}
+{"utc": "2026-11-15T20:12:42Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 41.89}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.45}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.8}]}
+{"utc": "2026-11-15T20:12:52Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 41.53}, {"name": "Hw11ErrorRateHigh", "state": "pending", "value": 0.52}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.94}]}
+{"utc": "2026-11-15T20:13:02Z", "alerts": [{"name": "Hw11TtfcP95High", "state": "firing", "value": 41.32}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.48}, {"name": "Hw11ErrorRateHigh", "state": "firing", "value": 0.91}]}

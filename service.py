@@ -190,15 +190,17 @@ class ServiceState:
     def release_slot(self):
         self.semaphore.release()
 
-    def generate_full(self, payload: dict) -> dict:
+    def generate_full(self, payload: dict, request_started: float | None = None) -> dict:
         """Блокирующая генерация полного ответа (в threadpool).
 
         Слот семафора уже захвачен endpoint'ом (до отправки заголовков);
-        generate_full освобождает его в finally."""
+        generate_full освобождает его в finally. request_started — момент
+        приёма запроса endpoint'ом: TTFC/answer считаются от него, т.е.
+        включают очередь (как их видит клиент)."""
         prompt, limit, session_id, turn = self.validate(payload)
         try:
             RUNNING_G.inc()
-            started = time.perf_counter()
+            started = request_started if request_started is not None else time.perf_counter()
             backend = self.backend
             answer = ""
             chunks = 0
@@ -457,7 +459,8 @@ def create_app(root: Path, warmup_seconds: float = 20.0, backend_name: str = "si
 
         if not stream:
             try:
-                result = await run_in_threadpool(state.generate_full, payload)
+                result = await run_in_threadpool(state.generate_full, payload,
+                                                 request_started)
                 result["queue_seconds"] = queue_seconds
                 log.info("request_done", extra={"kv": {
                     "request_id": request_id, "session_id": session_id,
@@ -481,7 +484,7 @@ def create_app(root: Path, warmup_seconds: float = 20.0, backend_name: str = "si
         # потребитель прерывает итерацию, закрывает генератор и учитывает
         # исход interrupted (иначе семафор утёк бы до конца стрима).
         backend = state.backend
-        started = time.perf_counter()
+        started = request_started  # TTFC/answer от приёма запроса (включая очередь)
         unwarmed = not getattr(backend, "warmed", True)
         stop_flag = threading.Event()
         sync_gen = backend.generate_stream(prompt, limit, session_id=session_id,

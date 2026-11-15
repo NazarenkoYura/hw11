@@ -58,14 +58,16 @@ spec:
         # Вычислительная нагрузка (опыт C): изменение должно пересоздавать Pod
         - name: CPU_BURN_MS_PER_TOKEN
           value: {{ .Values.backend.cpuBurnMsPerToken | quote }}
-        envFrom:
-        - configMapRef:
-            name: hw11-config
         {{- if .Values.real.enabled }}
         - name: BACKEND
           value: transformers
         - name: MAX_PARALLEL
           value: {{ .Values.real.maxParallel | quote }}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: hw11-config
+        {{- if .Values.real.enabled }}
         volumeMounts:
         - name: hf-cache
           mountPath: /mnt/hf

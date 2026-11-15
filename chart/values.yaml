@@ -116,7 +116,7 @@ real:
       memory: 3Gi
     limits:
       memory: 4Gi
-  hostPath: /mnt/hf/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899dec839871ff9c3e4afc8dcd97bcd53c53a5
+  hostPath: /mnt/hf/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca
   maxParallel: 1
 
 podAnnotations:

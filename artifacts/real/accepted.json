@@ -11,7 +11,7 @@
   },
   "golden_sha256": "0cc8b5cbd11b1ee9dcdb0738e08db8123a8d915c422834f998929c78cff41524",
   "kind": "base",
-  "local_path": "/mnt/hf/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+  "local_path": "/mnt/hf",
   "model_id": "Qwen/Qwen3-0.6B",
   "model_sha256": "052d8c0b8c31f61d79bcbbcca49c85414118746986773d57fb6a56f58e5a0c09",
   "protocol_sha256": "856233ebe54a90823ee20f95e07fefd9c96b9342efce28e7d7eb373c1ba59493",

@@ -1,0 +1,11 @@
+{
+  "window_utc": "2026-11-15T18:48:00Z",
+  "run": "affin-skew-noka-1",
+  "n_client_ok": 596,
+  "client_ttfc_p50": 0.738,
+  "client_ttfc_p95": 1.243,
+  "prometheus_ttfc_p50": 0.17,
+  "prometheus_ttfc_p95": 0.465,
+  "promql": "histogram_quantile(0.95, sum by (le) (rate(hw11_ttfc_seconds_bucket[1m])))",
+  "note": "Клиентские монотонные часы включают сеть и очередь; серверный TTFC — от приёма запроса до первой части (включает очередь, без сети). Шаг бакетов даёт округление перцентиля."
+}

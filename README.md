@@ -74,3 +74,25 @@ make clean                   # helm uninstall + kind delete cluster
 Каждый ответ и строка журнала содержат: `request_id`, `pod`, `model_version`
 (фактически загруженный `model_id`), `runtime_sha256`, `backend_mode=simulated`.
 Диалог без состояния: `session_id`, `history`, `turn` передаются в запросе.
+
+## Результаты опытов (фактические)
+
+- **Опыт A** — исходный дефект (readiness до прогрева): 7 ответов непрогретого
+  backend под нагрузкой; после исправления — 0. Rollout A→B со стримами: 0 5xx,
+  0 обрывов. Неготовая B — вне EndpointSlice, 0 запросов; откат без ошибок.
+  Kill контейнера: стрим оборван на 15/32 частей (EOF), Pod восстановлен.
+  → evidence/exp_a_summary.md
+- **Опыт B** — 5 комбинаций × 3 прогона × 120с, 6 rps, конкурентные клиенты
+  (4 воркера): affinity+skew даёт перекос 5.8:1 и очередь (TTFC p50 0.56с против
+  0.10с на холодной); plain+skew+keep-alive — привязка по соединению
+  (равномерно при 4 соединениях); plain+skew+no-keep-alive — равномерно 1:1,
+  hit-rate кеша падает с 0.97 до 0.49. → evidence/exp_b_runs.log
+- **Опыт C** — HPA 2→3 через 25с после нагрузки (CPU 141–298% vs цель 70%),
+  3→2 через 66с после снятия (окно стабилизации 60с); алерты:
+  Hw11TtfcP95High pending(2.75с)→firing(34с), Hw11ErrorRateHigh
+  pending(22%)→firing(93%), оба resolve после снятия нагрузки.
+  → evidence/exp_c_hpa_timeline.csv, exp_c_alerts*.jsonl
+- **Реальная модель** — Qwen3-0.6B (transformers, CPU, hostPath PV из кэша HF):
+  22/22 ok, TTFT p50 0.16с, TPOT p50 0.175с/токен, 5.7 tokens/s.
+  → results/requests_*_real.jsonl
+- **report.html** — полный отчёт с графиками charts/*.png.
