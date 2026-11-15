@@ -1,0 +1,120 @@
+{
+  "title": "HW11 — сервис под нагрузкой",
+  "uid": "hw11-main",
+  "tags": ["hw11", "mlops26"],
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "graphTooltip": 1,
+  "time": { "from": "now-15m", "to": "now" },
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1, "type": "timeseries", "title": "TTFC: время до первой части ответа, p50/p95 (сек)",
+      "description": "histogram_quantile по hw11_ttfc_seconds_bucket; сходимость с клиентским журналом проверяется в отчёте (опыт 5)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum by (le) (rate(hw11_ttfc_seconds_bucket[1m])))", "legendFormat": "p50 TTFC" },
+        { "expr": "histogram_quantile(0.95, sum by (le) (rate(hw11_ttfc_seconds_bucket[1m])))", "legendFormat": "p95 TTFC" }
+      ]
+    },
+    {
+      "id": 2, "type": "timeseries", "title": "Полная длительность ответа, p50/p95 (сек)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum by (le) (rate(hw11_answer_seconds_bucket[1m])))", "legendFormat": "p50 answer" },
+        { "expr": "histogram_quantile(0.95, sum by (le) (rate(hw11_answer_seconds_bucket[1m])))", "legendFormat": "p95 answer" }
+      ]
+    },
+    {
+      "id": 3, "type": "timeseries", "title": "Running / Waiting (обработка и очередь) по Pod",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (pod) (hw11_running)", "legendFormat": "running {{pod}}" },
+        { "expr": "sum by (pod) (hw11_waiting)", "legendFormat": "waiting {{pod}}" }
+      ]
+    },
+    {
+      "id": 4, "type": "timeseries", "title": "Очередь: p95 ожидания перед генерацией (сек)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
+      "targets": [
+        { "expr": "histogram_quantile(0.95, sum by (le) (rate(hw11_queue_seconds_bucket[1m])))", "legendFormat": "p95 queue" },
+        { "expr": "histogram_quantile(0.50, sum by (le) (rate(hw11_queue_seconds_bucket[1m])))", "legendFormat": "p50 queue" }
+      ]
+    },
+    {
+      "id": 5, "type": "timeseries", "title": "Завершённые запросы в секунду (ok) по Pod",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (pod) (rate(hw11_requests_total{outcome=\"ok\"}[1m]))", "legendFormat": "{{pod}}" }
+      ]
+    },
+    {
+      "id": 6, "type": "timeseries", "title": "Ошибки и отказы в секунду по исходу",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (outcome) (rate(hw11_requests_total{outcome!~\"ok|unwarmed\"}[1m]))", "legendFormat": "{{outcome}}" }
+      ]
+    },
+    {
+      "id": 7, "type": "timeseries", "title": "CPU по контейнерам сервиса (ядра)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "fieldConfig": { "defaults": { "unit": "none" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{image!=\"\", pod=~\"hw11.*\", container!=\"POD\", container!=\"pause\"}[1m]))", "legendFormat": "{{pod}}" }
+      ]
+    },
+    {
+      "id": 8, "type": "timeseries", "title": "RAM контейнеров сервиса (МБ)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+      "fieldConfig": { "defaults": { "unit": "decmbytes" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (pod) (container_memory_working_set_bytes{image!=\"\", pod=~\"hw11.*\", container!=\"POD\", container!=\"pause\"})/1024/1024", "legendFormat": "{{pod}}" }
+      ]
+    },
+    {
+      "id": 9, "type": "stat", "title": "Ready-реплик сервиса",
+      "description": "Сумма hw11_ready по всем Pod (readiness изнутри сервиса)",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 32 },
+      "fieldConfig": { "defaults": { "unit": "short", "min": 0, "max": 4 }, "overrides": [] },
+      "targets": [ { "expr": "sum(hw11_ready)", "legendFormat": "ready" } ]
+    },
+    {
+      "id": 10, "type": "stat", "title": "Доступных Pod (scrape up)",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 32 },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "targets": [ { "expr": "count(up{job=\"kubernetes-pods\"} == 1)", "legendFormat": "up" } ]
+    },
+    {
+      "id": 11, "type": "timeseries", "title": "Inter-chunk: интервалы между частями, p50/p95 (сек)",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 32 },
+      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum by (le) (rate(hw11_inter_chunk_seconds_bucket[1m])))", "legendFormat": "p50 ITL" },
+        { "expr": "histogram_quantile(0.95, sum by (le) (rate(hw11_inter_chunk_seconds_bucket[1m])))", "legendFormat": "p95 ITL" }
+      ]
+    },
+    {
+      "id": 12, "type": "timeseries", "title": "Имитация префиксного кеша: hit rate (по репликам)",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 36 },
+      "fieldConfig": { "defaults": { "unit": "percentunit", "min": 0, "max": 1 }, "overrides": [] },
+      "targets": [
+        { "expr": "sum by (pod) (rate(hw11_cache_total{result=\"hit\"}[2m])) / sum by (pod) (rate(hw11_cache_total[2m]))", "legendFormat": "{{pod}}" }
+      ]
+    },
+    {
+      "id": 13, "type": "timeseries", "title": "Ответы непрогретого backend (исходный дефект опыта A)",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 36 },
+      "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] },
+      "targets": [
+        { "expr": "sum(rate(hw11_unwarmed_total[1m]))", "legendFormat": "unwarmed/s" }
+      ]
+    }
+  ]
+}

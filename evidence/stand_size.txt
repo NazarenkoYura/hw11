@@ -1,0 +1,7 @@
+# Фактический размер стенда (docker system df, 2026-11-15)
+
+- hw11-service:real-1.0.0 — 1.78GB
+- hw11-service:1.0.0 — 1.78GB
+- node: 2.9G	/mnt
+- node: 25G	/var/lib/containerd
+- диск C: занято 705G, свободно 249G
